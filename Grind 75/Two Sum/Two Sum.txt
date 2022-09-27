@@ -1,1 +1,13 @@
+nums = [2,7,11,15]
+target = 9
 
+1. i = 0
+   map.containsKey(nums[0]), map is empty
+   we go to else
+   map = {7 : 0}
+
+2. i = 1
+   map.containsKey(7), key 7 exist in the map, condition is true
+   return map.get(nums[i]),i
+   map.get(7) -> get value with key 7
+   output = 0, 1

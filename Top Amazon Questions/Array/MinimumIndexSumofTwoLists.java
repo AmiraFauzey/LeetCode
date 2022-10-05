@@ -1,43 +1,31 @@
-class Solution {
+public class Solution {
     public String[] findRestaurant(String[] list1, String[] list2) {
-        // Store every place with it's index in list1
-        HashMap<String, Integer> seen = new HashMap();
-        
-        // Store the places from list1 to seen
-        for (int i = 0; i < list1.length; i++) {
-            seen.put(list1[i], i);
-        }
-        
-        // This will store places by it's sum index
-        HashMap<Integer, ArrayList<String>> least_common_places = new HashMap();
-        
-        // We will keep track of smallest index sum here
-        int least_index_sum = Integer.MAX_VALUE;
-        
-        // Loop over every place in list2
-        for (int i = 0; i < list2.length; i++) {
-            
-            // If a place from list2 in seen(a hashmap for list1)
-            if (seen.containsKey(list2[i])) {
-                // Calculate the index sum
-                int index_sum = seen.get(list2[i]) + i;
-                
-                // Keep track of smallest index sum
-                if (index_sum < least_index_sum) {
-                    least_index_sum = index_sum;
-                }
-                
-                // If index_sum(the key) is in hashmap (least common places)
-                if (least_common_places.containsKey(index_sum)) {
-                    least_common_places.get(index_sum).add(list2[i]);;
-                } else { // If index_sum(the key) not in hashmap (least common places)
-                    least_common_places.put(index_sum, new ArrayList<String>());
-                    least_common_places.get(index_sum).add(list2[i]);
-                }
-                
+        //store key ith element of list1 and value index of the ith element
+        HashMap < String, Integer > map = new HashMap < String, Integer > ();
+        //traverse over the whole list1
+        for (int i = 0; i < list1.length; i++)
+            //create an entry for each element of list1 in a hashmap
+            map.put(list1[i], i);
+        List < String > res = new ArrayList < > ();
+        int min_sum = Integer.MAX_VALUE, sum;
+        //traverse over the whole list2
+        for (int j = 0; j < list2.length && j <= min_sum; j++) {
+            //for every element list2[j] of list2 encountered, check if the same element already exist as a key in the map.
+            if (map.containsKey(list2[j])) {
+                //get the current value of hashmap corresponding to the specified key and current j value
+                //calculate the sum of value of hashmap with the j value(current indices of element that exist in the map)
+                sum = j + map.get(list2[j]);
+                //compare if current sum is less than the minimum sum, if so add the string to the arraylist and set mininum sum to the current sum
+                if (sum < min_sum) {
+                    res.clear();
+                    res.add(list2[j]);
+                    min_sum = sum;
+                //if value of current sum equal to the value of mininum sum add the string to the arraylist
+                } else if (sum == min_sum)
+                    res.add(list2[j]);
             }
         }
-        // The the places from least_index_sum
-        return least_common_places.get(least_index_sum).toArray(new String[0]);
+        //return the string of array
+        return res.toArray(new String[res.size()]);
     }
 }
